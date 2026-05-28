@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte Ejecutivo Digital - Proyecto JGALLO_BALI</title>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Reset & Variables */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg-color: #ffffff;
+            --primary-color: #262a36;
+            --accent-color: #Ffbc06;
+            --card-bg: #f8f9fa;
+            --border-color: #e9ecef;
+            --text-dark: #262a36;
+            --text-muted: #6c757d;
+            --alert-red: #d9534f;
+            --alert-red-bg: #fdf7f7;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Lock Screen Styling */
+        #lock-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--primary-color);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #ffffff;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .lock-container {
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 1.5rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .lock-logo-fallback {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.8rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem auto;
+        }
+
+        .lock-container h2 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .lock-container p {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            margin-bottom: 2rem;
+        }
+
+        .lock-form input {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            font-size: 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            margin-bottom: 1rem;
+            text-align: center;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .lock-form input:focus {
+            border-color: var(--accent-color);
+        }
+
+        .lock-form button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 0.95rem;
+            font-weight: 700;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 0.75rem;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+        }
+
+        .lock-form button:hover {
+            background-color: #e5a900;
+        }
+
+        .lock-form button:active {
+            transform: scale(0.98);
+        }
+
+        .error-msg {
+            color: #fc8181;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* Sticky Navigation */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: var(--primary-color);
+            border-bottom: 3px solid var(--accent-color);
+            z-index: 1000;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 35px;
+            display: block;
+        }
+
+        .logo-fallback {
+            width: 35px;
+            height: 35px;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            font-weight: 900;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-title {
+            color: #ffffff;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Main Content Layout */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Hero Header Section */
+        .hero-section {
+            margin-bottom: 4rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 2.5rem;
+        }
+
+        .hero-tag {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.35rem 0.75rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            font-weight: 400;
+            max-width: 900px;
+            opacity: 0.85;
+        }
+
+        /* Card Presentation System */
+        .card-presentation {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 1.5rem;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.02);
+        }
+
+        .card-index {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--text-dark);
+            opacity: 0.4;
+        }
+
+        .section-title {
+            font-size: 1.75rem;
+            font-weight: 900;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 24px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        /* Tablas Limpias */
+        .table-responsive {
+            overflow-x: auto;
+            width: 100%;
+        }
+
+        .doxus-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.95rem;
+        }
+
+        .doxus-table th {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 1rem 1.25rem;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .doxus-table th:first-child {
+            border-top-left-radius: 0.5rem;
+        }
+
+        .doxus-table th:last-child {
+            border-top-right-radius: 0.5rem;
+        }
+
+        .doxus-table td {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            background-color: #ffffff;
+        }
+
+        .doc-id {
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        /* Status badges */
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+
+        .badge-danger {
+            background-color: #fcebeb;
+            color: var(--alert-red);
+            border: 1px solid #f5c2c2;
+        }
+
+        .badge-success {
+            background-color: #ebfbf0;
+            color: #2e7d32;
+            border: 1px solid #c2f0cb;
+        }
+
+        .badge-warning {
+            background-color: #fffde6;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+
+        /* Fichas Contractuales - Apartado 02 */
+        .grid-two-cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 2rem;
+        }
+
+        .actor-profile {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+        }
+
+        .actor-header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 1rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .actor-role {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #ffffff;
+            background-color: var(--primary-color);
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .actor-name {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--primary-color);
+        }
+
+        .meta-list {
+            list-style: none;
+        }
+
+        .meta-item {
+            display: flex;
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .meta-label {
+            font-weight: 700;
+            width: 140px;
+            flex-shrink: 0;
+            color: var(--text-dark);
+            opacity: 0.8;
+        }
+
+        .meta-value {
+            color: var(--text-dark);
+        }
+
+        /* Esquema de Pagos - Apartado 03 */
+        .financial-box {
+            background-color: var(--accent-color);
+            border-radius: 1.25rem;
+            padding: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 2.5rem;
+        }
+
+        .financial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .fin-card {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .fin-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 0.5rem;
+        }
+
+        .fin-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .fin-desc {
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+            opacity: 0.9;
+        }
+
+        .hitos-container {
+            margin-top: 1rem;
+        }
+
+        .hitos-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            margin-bottom: 1.25rem;
+            color: var(--primary-color);
+        }
+
+        .hitos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .hito-item {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--primary-color);
+            border-radius: 0.5rem;
+            padding: 1.25rem;
+        }
+
+        .hito-val {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .hito-lbl {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Diagnóstico y Tiempos - Apartado 04 */
+        .timeline-vertical {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-vertical::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 5px;
+            bottom: 5px;
+            width: 2px;
+            background-color: var(--border-color);
+        }
+
+        .timeline-node {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-node::before {
+            content: '';
+            position: absolute;
+            left: -31px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .timeline-window {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #ffffff;
+            background: var(--primary-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-content h4 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content p {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .critical-note {
+            background: #fffdf5;
+            border: 1px solid #ffeeba;
+            border-left: 4px solid var(--accent-color);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .critical-note strong {
+            color: var(--primary-color);
+        }
+
+        /* Highlight Boxes for Overdue Analysis */
+        .alert-summary-box {
+            background-color: var(--alert-red-bg);
+            border: 1px solid #f5c2c2;
+            border-left: 5px solid var(--alert-red);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .alert-icon-wrapper {
+            background: var(--alert-red);
+            color: #ffffff;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .alert-text-wrapper h4 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .alert-text-wrapper p {
+            font-size: 0.95rem;
+            color: #5c2c2a;
+        }
+
+        /* Recomendaciones - Apartado 07 */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .roadmap-step {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 1rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .step-num {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--accent-color);
+            line-height: 1;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .step-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-desc {
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            opacity: 0.9;
+        }
+
+        /* Footer Section */
+        .doxus-footer {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 4rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 3rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-logo-container .logo-img {
+            height: 42px; /* 20% más grande que el de nav (35px * 1.2 = 42px) */
+        }
+
+        .footer-logo-container .logo-fallback {
+            width: 42px;
+            height: 42px;
+            font-size: 1.4rem;
+        }
+
+        .footer-signature {
+            text-align: right;
+        }
+
+        .sig-name {
+            font-size: 1.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .footer-bottom {
+            font-size: 0.85rem;
+            color: #a0aec0;
+        }
+
+        .disclaimer-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.8rem;
+            line-height: 1.5;
+            text-align: justify;
+        }
+
+        .copyright-text {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .card-presentation {
+                padding: 2rem 1.5rem;
+            }
+            .grid-two-cols {
+                grid-template-columns: 1fr;
+            }
+            .footer-top {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .footer-signature {
+                text-align: left;
+            }
+            .meta-item {
+                flex-direction: column;
+            }
+            .meta-label {
+                width: 100%;
+                margin-bottom: 0.15rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Bloqueo Inicial de Seguridad -->
+    <div id="lock-screen">
+        <div class="lock-container">
+            <!-- Sistema de Fallback de Logo en Pantalla de Bloqueo -->
+            <div class="lock-logo-container">
+                <img src="logo.png" alt="Doxus Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="lock-logo-fallback" style="display:none;">D</div>
+            </div>
+            <h2>Acceso Restringido</h2>
+            <p>Reporte Ejecutivo Digital</p>
+            <div class="lock-form">
+                <input type="password" id="doxus-pass" placeholder="Introduzca la clave de acceso" autocomplete="off">
+                <button onclick="validateAccess()">Desbloquear Documento</button>
+                <div id="error-msg" class="error-msg">Clave incorrecta. Autenticación fallida.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra de Navegación Fija (Sticky Nav) -->
+    <nav class="sticky-nav">
+        <div class="nav-logo-container">
+            <img src="logo.png" alt="Doxus Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="logo-fallback" style="display:none;">D</div>
+        </div>
+        <div class="nav-title">Análisis de Operación</div>
+    </nav>
+
+    <!-- Contenedor Principal One-Page Scroll -->
+    <main class="main-container">
+        
+        <!-- Hero Header -->
+        <header class="hero-section">
+            <span class="hero-tag">CONTRATO DE PROMESA DE APORTACIÓN A FIDEICOMISO</span>
+            <h1 class="hero-title">Proyecto "JGALLO_BALI"</h1>
+            <p class="hero-subtitle">
+                Análisis técnico de riesgos y conciliación de hitos financieros al <strong>28 de mayo de 2026</strong>. Evaluación de obligaciones sustantivas y contingencias operativas derivadas de los términos del contrato firmado el 4 de abril de 2025.
+            </p>
+        </header>
+
+        <!-- APARTADO 01: Inventario de Documentos -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 01</span>
+            <h2 class="section-title">Inventario de Documentos Analizados</h2>
+            <div class="table-responsive">
+                <table class="doxus-table">
+                    <thead>
+                        <tr>
+                            <th>ID Código</th>
+                            <th>Instrumento Jurídico / Activo</th>
+                            <th>Fecha de Suscripción</th>
+                            <th>Estatus Legal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="doc-id">DOC-01</td>
+                            <td>Contrato de Promesa de Aportación a Fideicomiso (Proyecto JGALLO_BALI)</td>
+                            <td>04 de abril de 2025</td>
+                            <td>Revisado / Técnico</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">DOC-02</td>
+                            <td>Título de Propiedad No. 00000169428 (Secretaría de la Reforma Agraria)</td>
+                            <td>30 de noviembre de 2012</td>
+                            <td>Validado (Tracto Sucesivo)</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">DOC-03</td>
+                            <td>Escritura Pública 15,600 - Constitución de Bali de Lagos Inmobiliaria</td>
+                            <td>31 de julio de 2006</td>
+                            <td>Validada (Personería)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- APARTADO 02: Análisis Contractual -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 02</span>
+            <h2 class="section-title">Análisis Contractual y Personería</h2>
+            <div class="grid-two-cols">
+                
+                <!-- El Aportante -->
+                <div class="actor-profile">
+                    <div class="actor-header">
+                        <span class="actor-role">El Aportante</span>
+                        <h3 class="actor-name">Alejandro Garza Ayala</h3>
+                    </div>
+                    <ul class="meta-list">
+                        <li class="meta-item">
+                            <span class="meta-label">Personalidad:</span>
+                            <span class="meta-value">Persona física, por propio derecho.</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">Régimen:</span>
+                            <span class="meta-value">Casado bajo separación de bienes.</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">RFC:</span>
+                            <span class="meta-value">GAAA6906283Y4</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">Domicilio:</span>
+                            <span class="meta-value">Av. Jalisco 2000, El Mante, C.P. 45235, Zapopan, Jalisco.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- El Desarrollador -->
+                <div class="actor-profile">
+                    <div class="actor-header">
+                        <span class="actor-role">El Desarrollador</span>
+                        <h3 class="actor-name">Bali de Lagos Inmobiliaria, S.A. de C.V.</h3>
+                    </div>
+                    <ul class="meta-list">
+                        <li class="meta-item">
+                            <span class="meta-label">Representante:</span>
+                            <span class="meta-value">José Luis Barajas González (Adm. Único).</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">Constitución:</span>
+                            <span class="meta-value">Escritura Pública 15,600 (FME 14025*9).</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">RFC:</span>
+                            <span class="meta-value">BLI060731AE8</span>
+                        </li>
+                        <li class="meta-item">
+                            <span class="meta-label">Domicilio:</span>
+                            <span class="meta-value">Agustín Rivera 368, Int. 25, Col. Centro, Lagos de Moreno, Jal.</span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <!-- Información del Activo Comprometido -->
+            <div style="margin-top: 2.5rem; background: #ffffff; border: 1px solid var(--border-color); border-radius: 1rem; padding: 2rem;">
+                <h3 style="font-size: 1.2rem; font-weight: 800; color: var(--primary-color); margin-bottom: 1rem;">Cláusula de Control: Definición Técnica del Activo</h3>
+                <ul class="meta-list">
+                    <li class="meta-item"><span class="meta-label">Activo Fijo:</span><span class="meta-value">Solar Urbano (Lote 1, manzana 650, zona 8). Poblado de Santa Ana Tepetitlán, Zapopan (hoy Tlaquepaque), Jal.</span></li>
+                    <li class="meta-item"><span class="meta-label">Superficie:</span><span class="meta-value">14,274.62 metros cuadrados.</span></li>
+                    <li class="meta-item"><span class="meta-label">Registro:</span><span class="meta-value">Cuenta Predial U225313 / Folio Real 2710594 (RPP Guadalajara).</span></li>
+                    <li class="meta-item"><span class="meta-label">Finalidad:</span><span class="meta-value">Aportación a Fideicomiso de Administración Inmobiliaria para desarrollo de uso mixto (comercial/habitacional).</span></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- APARTADO 03: Esquema de Pagos -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 03</span>
+            <h2 class="section-title">Esquema Financiero y Distribución</h2>
+            
+            <!-- Caja Resaltada en Amarillo Doxus -->
+            <div class="financial-box">
+                <div class="financial-grid">
+                    <div class="fin-card">
+                        <span class="fin-label">Expectativa Total Recuperación</span>
+                        <span class="fin-amount">$130,000,000 MXN</span>
+                        <span class="fin-desc">Correspondiente al 13.00% del valor de venta total proyectado ($1,000M MXN).</span>
+                    </div>
+                    <div class="fin-card">
+                        <span class="fin-label">Monto de Anticipos Pactados</span>
+                        <span class="fin-amount">$13,000,000 MXN</span>
+                        <span class="fin-desc">Suma total de flujos garantizados condicionados a hitos técnicos.</span>
+                    </div>
+                    <div class="fin-card">
+                        <span class="fin-label">Estructura de Riesgo</span>
+                        <span class="fin-amount">Riesgo Proyecto</span>
+                        <span class="fin-desc">Distribución prorrateada según la escrituración de unidades a terceros.</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desglose de Hitos de Pago (Anticipos a cuenta) -->
+            <div class="hitos-container">
+                <h3 class="hitos-title">Mecánica de Depósitos en Garantía (Cláusula Sexta)</h3>
+                <div class="hitos-grid">
+                    <div class="hito-item">
+                        <div class="hito-val">$1,000,000 MXN</div>
+                        <div class="hito-lbl">A la firma del contrato de promesa.</div>
+                    </div>
+                    <div class="hito-item">
+                        <div class="hito-val">$2,000,000 MXN</div>
+                        <div class="hito-lbl">Al obtener las factibilidades administrativas.</div>
+                    </div>
+                    <div class="hito-item">
+                        <div class="hito-val">$2,000,000 MXN</div>
+                        <div class="hito-lbl">Al formalizar la aportación al Fideicomiso.</div>
+                    </div>
+                    <div class="hito-item">
+                        <div class="hito-val">$8,000,000 MXN</div>
+                        <div class="hito-lbl">Al obtener las Licencias de Construcción.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- APARTADO 04: Diagnóstico y Tiempos -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 04</span>
+            <h2 class="section-title">Diagnóstico Operativo y Tiempos Originales</h2>
+            
+            <!-- Línea de tiempo vertical -->
+            <div class="timeline-vertical">
+                
+                <div class="timeline-node">
+                    <span class="timeline-window">180 Días Naturales</span>
+                    <div class="timeline-content">
+                        <h4>Fase de Viabilidad y Factibilidad</h4>
+                        <p>Plazo máximo para que el desarrollador confirme la viabilidad del despliegue de al menos 400 unidades privativas en el inmueble.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <span class="timeline-window">7 Meses Base</span>
+                    <div class="timeline-content">
+                        <h4>Gestión de Licencias y Uso de Suelo</h4>
+                        <p>Plazo ordinario desde la firma de la aportación para consolidar los permisos administrativos primarios.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <span class="timeline-window">13 Meses MÁX</span>
+                    <div class="timeline-content">
+                        <h4>Ventana Máxima de Prórroga</h4>
+                        <p>Extensión máxima permitida únicamente bajo trámite activo y justificado ante las autoridades gubernamentales.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-node">
+                    <span class="timeline-window">30 Meses</span>
+                    <div class="timeline-content">
+                        <h4>Conclusión de Primera Etapa</h4>
+                        <p>Fecha límite para la entrega de la primera fase construida tras el arranque oficial de obra.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Nota de Análisis Crítico -->
+            <div class="critical-note">
+                <strong>Análisis Crítico de Ventana Temporal:</strong> Los plazos anteriores operan como condiciones suspensivas. Al haberse superado las fechas límite al día de hoy, el estatus jurídico contractual se sitúa en un escenario de incumplimiento grave por parte del Desarrollador.
+            </div>
+        </section>
+
+        <!-- APARTADO 05: Control de Hitos Vencidos -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 05</span>
+            <h2 class="section-title">Auditoría Temporal: Control de Hitos Contractuales Vencidos</h2>
+            
+            <div class="alert-summary-box">
+                <div class="alert-icon-wrapper">!</div>
+                <div class="alert-text-wrapper">
+                    <h4>Alerta Operativa de Incumplimiento Contractual</h4>
+                    <p>Habiéndose cumplido 1 año, 1 mes y 24 días desde la firma del contrato (04/Abr/2025), la totalidad de las fases iniciales de desarrollo y permisos administrativos obligatorios se encuentran formalmente vencidas.</p>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="doxus-table">
+                    <thead>
+                        <tr>
+                            <th>Hito Contractual Obligatorio</th>
+                            <th>Plazo Pactado</th>
+                            <th>Fecha Límite Exigible</th>
+                            <th>Días de Desfase</th>
+                            <th>Estado Actual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="doc-id">Firma del Contrato de Promesa</td>
+                            <td>Inmediato</td>
+                            <td>04 de abril de 2025</td>
+                            <td>0 días</td>
+                            <td><span class="badge badge-success">Cumplido</span></td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Confirmación de Viabilidad técnica (Mín. 400 unidades)</td>
+                            <td>180 días naturales</td>
+                            <td>01 de octubre de 2025</td>
+                            <td><strong style="color: var(--alert-red);">239 días vencidos</strong></td>
+                            <td><span class="badge badge-danger">Vencido</span></td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Obtención de Licencias y Uso de Suelo (Plazo Base)</td>
+                            <td>7 meses</td>
+                            <td>04 de noviembre de 2025</td>
+                            <td><strong style="color: var(--alert-red);">205 días vencidos</strong></td>
+                            <td><span class="badge badge-danger">Vencido</span></td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Límite Máximo con Prórroga de Licencias</td>
+                            <td>13 meses (7m + 6m)</td>
+                            <td>04 de mayo de 2026</td>
+                            <td><strong style="color: var(--alert-red);">24 días vencidos</strong></td>
+                            <td><span class="badge badge-danger">Límite Excedido</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- APARTADO 06: Conciliación de Pagos Exigibles -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 06</span>
+            <h2 class="section-title">Conciliación Financiera: Pagos exigibles por Alejandro Garza</h2>
+            
+            <p style="margin-bottom: 2rem; font-size: 1rem; opacity: 0.85;">
+                De acuerdo con la <strong>Cláusula Sexta</strong>, la entrega de los flujos está vinculada directamente al transcurso del tiempo o a hitos técnicos específicos. Al haberse excedido las fechas límites legales, los siguientes pagos son jurídicamente reclamables al Desarrollador:
+            </p>
+
+            <div class="table-responsive">
+                <table class="doxus-table">
+                    <thead>
+                        <tr>
+                            <th>Concepto de Pago / Anticipo</th>
+                            <th>Monto Pactado</th>
+                            <th>Condición Legal Contractual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="doc-id">Anticipo por Firma de Contrato</td>
+                            <td style="font-weight: 700;">$1,000,000.00 MXN</td>
+                            <td>Firma del contrato de promesa</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Anticipo por Factibilidades</td>
+                            <td style="font-weight: 700; color: var(--alert-red);">$2,000,000.00 MXN</td>
+                            <td>Obtención de factibilidades administrativas</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Anticipo por Fideicomiso</td>
+                            <td style="font-weight: 700; color: var(--alert-red);">$2,000,000.00 MXN</td>
+                            <td>Formalizar aportación al Fideicomiso</td>
+                        </tr>
+                        <tr>
+                            <td class="doc-id">Anticipo por Licencias de Construcción</td>
+                            <td style="font-weight: 700; color: var(--alert-red);">$8,000,000.00 MXN</td>
+                            <td>Obtención de Licencias de Construcción</td>
+                        </tr>
+                        <tr style="background-color: var(--primary-color); color: #ffffff; font-weight: 800;">
+                            <td style="text-transform: uppercase; letter-spacing: 1px;">Total Exigible al Desarrollador</td>
+                            <td style="font-size: 1.2rem; color: var(--accent-color);">$13,000,000.00 MXN</td>
+                            <td style="text-align: right; font-size: 0.8rem; text-transform: uppercase;">Monto acumulado exigible a la fecha</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- APARTADO 07: Recomendaciones -->
+        <section class="card-presentation">
+            <span class="card-index">APARTADO 07</span>
+            <h2 class="section-title">Recomendaciones Estratégicas y Mitigación</h2>
+            
+            <div class="roadmap-grid">
+                
+                <div class="roadmap-step">
+                    <div class="step-num">01</div>
+                    <h3 class="step-title">Contacto de inmediato</h3>
+                    <p class="step-desc">Contactar de inmediato al aportante para renegociar los términos contractuales vigentes.</p>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-num">02</div>
+                    <h3 class="step-title">Modificación Contractual</h3>
+                    <p class="step-desc">Modificar el contrato de promesa de aportación en cuanto a los tiempos y flujos de dinero pactados.</p>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-num">03</div>
+                    <h3 class="step-title">Firma del Fideicomiso</h3>
+                    <p class="step-desc">Proceder con la firma y formalización definitiva del fideicomiso de administración inmobiliaria.</p>
+                </div>
+
+                <div class="roadmap-step">
+                    <div class="step-num">04</div>
+                    <h3 class="step-title">Actualización del Calendario</h3>
+                    <p class="step-desc">Actualizar con fechas posibles el calendario de hitos para evitar caer en nuevos incumplimientos.</p>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="doxus-footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <!-- Logo Footer 20% más grande -->
+                <div class="footer-logo-container">
+                    <img src="logo.png" alt="Doxus Logo" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-fallback" style="display:none;">D</div>
+                </div>
+                <div class="footer-signature">
+                    <div class="sig-name">MAXIMILIANO ARÉCHIGA-MORALES</div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="disclaimer-box">
+                    LA INFORMACIÓN PRESENTADA AQUÍ ES UN RESUMEN GENERAL DE LA OPERACIÓN QUE FUE REFERIDA PARA SU REVISIÓN. SE RECOMIENDA CONSULTAR CADA CONTRATO RELACIONADO Y COMENTAR CON EL PROFESIONISTA DE SU CONFIANZA EL ALCANCE DE LAS DECISIONES.
+                </div>
+                <div class="copyright-text">
+                    &copy; 2026 DOXUS - TODOS LOS DERECHOS RESERVADOS
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Script de Validación y Seguridad -->
+    <script>
+        function validateAccess() {
+            var passInput = document.getElementById('doxus-pass').value;
+            var errorMsg = document.getElementById('error-msg');
+            var lockScreen = document.getElementById('lock-screen');
+            
+            // Nueva clave de seguridad: JGALLO
+            if (passInput === 'JGALLO') {
+                lockScreen.style.opacity = '0';
+                lockScreen.style.visibility = 'hidden';
+                document.body.style.overflowY = 'auto';
+            } else {
+                errorMsg.style.display = 'block';
+                document.getElementById('doxus-pass').value = '';
+            }
+        }
+
+        // Bloquear scroll inicial
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.overflowY = 'none';
+            
+            // Permitir desbloqueo con la tecla Enter
+            document.getElementById('doxus-pass').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    validateAccess();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
